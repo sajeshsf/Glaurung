@@ -19,11 +19,19 @@ totalBatch = 1
 # initial learning rate & lr decays to lr*1/5 per N_epoch
 iniLR = 0.0005
 
+# batch, nz, nx, input_maps
+x = tf.placeholder(tf.float32, [None, None, None, 3])
+# batch, output_maps
+y = tf.placeholder(tf.float32, [None, None])  
+LearnRate = tf.placeholder(tf.float32, shape=[])
+#beta = tf.placeholder(tf.float32, shape=[])
+phase_train = tf.placeholder(tf.bool, name='phase_train')
+
 
 def GetBatch():
     nTrainField = 100
     TrainData = ld.LoadData(nTrainField, 3000, 4)
-    return TrainData, np.zeros([1, 1], dtype=float)
+    return tf.convert_to_tensor(TrainData), tf.convert_to_tensor(np.zeros([1, 1], dtype=float))
 
 
 for i1 in range(nStep):
@@ -36,7 +44,7 @@ for i1 in range(nStep):
 
             x_data, y_data = GetBatch()
             sess = tf.Session()
-            optimizer='adam'
+            optimizer = 'adam'
             _ = sess.run(optimizer,
                          feed_dict={x: x_data, y: y_data, LearnRate: rate, phase_train: True})
 
