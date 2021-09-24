@@ -38,6 +38,16 @@ def LoadData(nField, iniField, intervalField):
         Data[:, :, :, image1] = Data[:, :, :, image1]/Input_std[image1]
     return Data
 
+def GetBatch():
+    nTrainField = 100
+    TrainData = LoadData(nTrainField, 3000, 4)
+    TrainData = TrainData[:,:,:, 0:3]
+    #TrainData = tf.slice(TrainData, begin=[0, 0, 0, 0], size=[100, 192, 192, 3])
+    #TrainData = np.array(t2)
+    #return tf.convert_to_tensor(TrainData), tf.convert_to_tensor(np.zeros([1, 1], dtype=float))
+    #return tf.convert_to_tensor(TrainData), tf.convert_to_tensor(np.zeros([1, 1], dtype=float))
+    #return TrainData,tf.placeholder(tf.float32, [100, 3])
+    return TrainData,np.zeros([100, 3], dtype=float)
 
 # nTrainField = 100
 # TrainData = LoadData(nTrainField, 3000, 4)
