@@ -1,4 +1,5 @@
 import random
+import sys
 import LoadData as ld
 from scipy.io import FortranFile
 import time
@@ -52,7 +53,7 @@ SizeO = tf.placeholder(tf.int32, shape=[])
 # batch, nz, nx, input_maps
 x = tf.placeholder(tf.float32, [None, None, None, 3])
 # batch, output_maps
-y = tf.placeholder(tf.float32, [None, None])  
+y = tf.placeholder(tf.float32, [None, None])
 LearnRate = tf.placeholder(tf.float32, shape=[])
 #beta = tf.placeholder(tf.float32, shape=[])
 phase_train = tf.placeholder(tf.bool, name='phase_train')
@@ -117,11 +118,20 @@ for i1 in range(nStep):
     for i2 in range(subEpoch):
 
         for i3 in range(totalBatch):
-
             x_data, y_data = ld.GetBatch()
-
-            outPut = sess.run(optimizer,
-                         feed_dict={x: x_data, y: y_data, LearnRate: rate, phase_train: True})
-            print(outPut)
+            phaseTrain = True
+            print(x_data.dtype , x_data.shape)
+            print(y_data.dtype , y_data.shape)
+            print(phase_train)
+            
+            try:
+                #outPut = 
+                sess.run(optimizer, feed_dict={
+                                  x: x_data, y: y_data, LearnRate: rate, phase_train: True})
+                #print(outPut)
+            except:
+                info = sys.exc_info()
+                print("Unexpected error:", info)
+                raise
 
 print("completed")
