@@ -47,7 +47,7 @@ def GetBatch():
     #return tf.convert_to_tensor(TrainData), tf.convert_to_tensor(np.zeros([1, 1], dtype=float))
     #return tf.convert_to_tensor(TrainData), tf.convert_to_tensor(np.zeros([1, 1], dtype=float))
     #return TrainData,tf.placeholder(tf.float32, [100, 3])
-    return TrainData,np.zeros([100, 3], dtype=np.float32)
+    return TrainData,np.zeros([10000, 256], dtype=np.float32)
 
 # nTrainField = 100
 # TrainData = LoadData(nTrainField, 3000, 4)

@@ -119,16 +119,15 @@ for i1 in range(nStep):
 
         for i3 in range(totalBatch):
             x_data, y_data = ld.GetBatch()
-            phaseTrain = True
-            print(x_data.dtype , x_data.shape)
-            print(y_data.dtype , y_data.shape)
-            print(phase_train)
-            
+            #print(x_data.dtype , x_data.shape)
+            #print(y_data.dtype , y_data.shape)
+            # print(phase_train)
+            print(i1, i2, i3)
             try:
-                #outPut = 
+                # outPut =
                 sess.run(optimizer, feed_dict={
-                                  x: x_data, y: y_data, LearnRate: rate, phase_train: True})
-                #print(outPut)
+                    x: x_data, y: y_data, LearnRate: rate, phase_train: True})
+                # print(outPut)
             except:
                 info = sys.exc_info()
                 print("Unexpected error:", info)
