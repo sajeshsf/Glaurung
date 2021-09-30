@@ -6,6 +6,7 @@ import time
 import numpy as np
 import tensorflow.compat.v1 as tf
 tf.disable_v2_behavior()
+import matplotlib.pyplot as plt
 
 ########################### Model Parameters ######################################################
 # input kernel size (e.g. 33x33)
@@ -77,8 +78,8 @@ h_fc1 = fc_layer(h_conv3, W_fc, b_fc1)
 predict_y = h_fc1
 predict_y = tf.reshape(predict_y, [-1, 1])
 real_y = tf.reshape(y, [-1, 1])
-print(real_y)
-print(y)
+# print(real_y)
+# print(y)
 
 cost_y = tf.reduce_mean(tf.square(predict_y - real_y))
 
@@ -105,32 +106,37 @@ sess.run(tf.global_variables_initializer())
 subEpoch = 100
 nStep = 5
 totalEpoch = subEpoch * nStep
-totalBatch = 1
+totalBatch = 100
 
 # initial learning rate & lr decays to lr*1/5 per N_epoch
 iniLR = 0.0005
 
-
+stepCosts = []  
 for i1 in range(nStep):
     # Change Learningrate
     rate = iniLR * np.power(5.0, -float(i1))
-
+    subEpochCosts = []
+    stepCosts.append(subEpochCosts)
+    
     for i2 in range(subEpoch):
-
+        batchCosts = []
+        subEpochCosts.append(batchCosts)
+        
         for i3 in range(totalBatch):
-            x_data, y_data = ld.GetBatch()
+            x_data, y_data = ld.GetBatch(i3)
             #print(x_data.dtype , x_data.shape)
             #print(y_data.dtype , y_data.shape)
             # print(phase_train)
             print(i1, i2, i3)
             try:
-                # outPut =
-                sess.run(optimizer, feed_dict={
+                outPut, batchCost = sess.run([optimizer, cost], feed_dict={
                     x: x_data, y: y_data, LearnRate: rate, phase_train: True})
-                # print(outPut)
+                print(outPut,batchCost)
+                batchCosts.append(batchCost)
             except:
                 info = sys.exc_info()
                 print("Unexpected error:", info)
                 raise
-
+     
+#plot cost
 print("completed")

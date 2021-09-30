@@ -49,6 +49,12 @@ def GetBatch():
     #return TrainData,tf.placeholder(tf.float32, [100, 3])
     return TrainData,np.zeros([10000, 256], dtype=np.float32)
 
+def GetBatch(nBatch):
+    nTrainField = 100
+    TrainData = LoadData(nTrainField, 3000, 4)
+    TrainData = TrainData[nBatch:nBatch,:,:, 0:3]
+    return TrainData,np.zeros([1, 0], dtype=np.float32)
+
 # nTrainField = 100
 # TrainData = LoadData(nTrainField, 3000, 4)
 # print("sucess")
